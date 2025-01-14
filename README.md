@@ -63,17 +63,18 @@ docker exec -it --user node n8n sh
 ls -la /home/node/.n8n
 ```
 
+Exit the container:
+
+```bash
+exit
+```
+
 Backup the configuration files to your local machine:
 
 ```bash
 docker cp <container_id>:/home/node/.n8n ./n8n_backup
 ```
 
-Exit the container:
-
-```bash
-exit
-```
 
 Verify the backup file on your local machine:
 
@@ -127,15 +128,8 @@ sudo chown -R 1000:1000 /var/lib/docker/volumes/n8n_data/_data
 sudo chmod -R 700 /var/lib/docker/volumes/n8n_data/_data
 ```
 
-## 11. Verify the Backup Data in the Container
 
-Start the container and check that the data is properly restored:
-
-```bash
-docker exec -it --user node n8n sh -c "ls -la /home/node/.n8n"
-```
-
-## 12. Create a New n8n Container with the Restored Data
+## 11. Create a New n8n Container with the Restored Data
 
 Run a new n8n container with the restored data and updated version:
 
@@ -148,6 +142,14 @@ docker run -d --restart unless-stopped \
 -e WEBHOOK_URL="https://your-domain.com/" \
 -v n8n_data:/home/node/.n8n \
 n8nio/n8n:1.73.1
+```
+
+## 12. Verify the Backup Data in the Container
+
+Start the container and check that the data is properly restored:
+
+```bash
+docker exec -it --user node n8n sh -c "ls -la /home/node/.n8n"
 ```
 
 ## Important Additional Information (Must Read)
