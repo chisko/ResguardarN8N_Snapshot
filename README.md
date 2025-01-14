@@ -2,6 +2,9 @@
 
 This guide provides step-by-step instructions to create a reliable instance of n8n, update its version, and secure its data using snapshots. Follow each step carefully to ensure a smooth process.
 
+## Documentation
+For further reference, check the official documentation: https://docs.n8n.io/hosting/installation/docker/#updating
+
 ## 1. Add Your User to the Docker Group
 
 To run Docker commands without `sudo`:
@@ -146,4 +149,27 @@ docker run -d --restart unless-stopped \
 -v n8n_data:/home/node/.n8n \
 n8nio/n8n:1.73.1
 ```
+
+## Important Additional Information (Must Read)
+
+### How Persistent Volumes Work
+The `n8n_data` volume is stored outside of the container, ensuring that all your workflows and configurations are preserved even if the container is stopped or removed. Here's how it works:
+
+1. **Data remains safe when stopping or restarting the container**:
+   - Use `docker stop n8n` to stop the application.
+   - Use `docker start n8n` to restart it, and your data will still be intact.
+
+2. **Volume persists beyond container deletion**:
+   - If you delete the container with `docker rm n8n`, the data in the `n8n_data` volume will remain safe.
+   - You can reuse the volume by mapping it to a new container:
+
+   ```bash
+   docker run -d --restart unless-stopped \
+   --name n8n \
+   -p 5678:5678 \
+   -v n8n_data:/home/node/.n8n \
+   n8nio/n8n:latest
+   ```
+
+By leveraging Docker volumes, you ensure that your n8n instance remains resilient and your data secure through updates or container changes.
 
