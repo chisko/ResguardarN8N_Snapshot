@@ -131,7 +131,7 @@ sudo chmod -R 700 /var/lib/docker/volumes/n8n_data/_data
 
 ## 11. Create a New n8n Container with the Restored Data
 
-Run a new n8n container with the restored data and updated version:
+Run a new n8n container with the restored data "n8n_data" and updated version:
 
 ```bash
 docker run -d --restart unless-stopped \
@@ -166,12 +166,15 @@ The `n8n_data` volume is stored outside of the container, ensuring that all your
    - You can reuse the volume by mapping it to a new container:
 
    ```bash
-   docker run -d --restart unless-stopped \
-   --name n8n \
-   -p 5678:5678 \
-   -v n8n_data:/home/node/.n8n \
-   n8nio/n8n:latest
-   ```
+docker run -d --restart unless-stopped \
+--name n8n \
+-p 5678:5678 \
+-e N8N_HOST="your-domain.com" \
+-e WEBHOOK_TUNNEL_URL="https://your-domain.com/" \
+-e WEBHOOK_URL="https://your-domain.com/" \
+-v n8n_data:/home/node/.n8n \
+n8nio/n8n:latest
+```
 
 By leveraging Docker volumes, you ensure that your n8n instance remains resilient and your data secure through updates or container changes.
 
