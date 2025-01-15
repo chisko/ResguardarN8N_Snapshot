@@ -140,7 +140,7 @@ docker run -d --restart unless-stopped \
 -e N8N_HOST="your-domain.com" \
 -e WEBHOOK_TUNNEL_URL="https://your-domain.com/" \
 -e WEBHOOK_URL="https://your-domain.com/" \
--v n8n_data:/home/node/.n8n \
+-v n8n_data:/home/node/.n8n \ 
 n8nio/n8n:1.73.1
 ```
 
@@ -165,15 +165,15 @@ The `n8n_data` volume is stored outside of the container, ensuring that all your
    - If you delete the container with `docker rm n8n`, the data in the `n8n_data` volume will remain safe.
    - You can reuse the volume by mapping it to a new container:
 
-   ```bash
+```bash
 docker run -d --restart unless-stopped \
 --name n8n \
 -p 5678:5678 \
 -e N8N_HOST="your-domain.com" \
 -e WEBHOOK_TUNNEL_URL="https://your-domain.com/" \
 -e WEBHOOK_URL="https://your-domain.com/" \
--v n8n_data:/home/node/.n8n \
-n8nio/n8n:latest
+-v n8n_data:/home/node/.n8n \  # here is where we mount n8n_data
+n8nio/n8n:latest # we call the latest stable version
 ```
 
 By leveraging Docker volumes, you ensure that your n8n instance remains resilient and your data secure through updates or container changes.
