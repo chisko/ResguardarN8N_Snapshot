@@ -140,7 +140,7 @@ docker run -d --restart unless-stopped \
 -e N8N_HOST="your-domain.com" \
 -e WEBHOOK_TUNNEL_URL="https://your-domain.com/" \
 -e WEBHOOK_URL="https://your-domain.com/" \
--v n8n_data:/home/node/.n8n \ 
+-v n8n_data:/home/node/.n8n \
 n8nio/n8n:1.73.1
 ```
 
